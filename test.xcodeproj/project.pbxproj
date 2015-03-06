@@ -239,16 +239,8 @@
 			children = (
 				C612327B1AA97E1400CD80E8 /* Binding.h */,
 				C612327C1AA97E1400CD80E8 /* Binding.m */,
-				C612327D1AA97E1400CD80E8 /* KVOBlockBinding */,
 			);
 			path = FoundationCategory;
-			sourceTree = "<group>";
-		};
-		C612327D1AA97E1400CD80E8 /* KVOBlockBinding */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = KVOBlockBinding;
 			sourceTree = "<group>";
 		};
 		C612327E1AA97E1400CD80E8 /* Layout */ = {
@@ -664,6 +656,7 @@
 				C612326B1AA97DF300CD80E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C612326C1AA97DF300CD80E8 /* Build configuration list for PBXNativeTarget "testTests" */ = {
 			isa = XCConfigurationList;
@@ -672,6 +665,7 @@
 				C612326E1AA97DF300CD80E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
