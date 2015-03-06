@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WLErrorTipViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="web" destination="P4r-8L-H52" id="GBl-ut-PcS"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P4r-8L-H52">
+                    <rect key="frame" x="8" y="50" width="304" height="468"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </webView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上次闪退原因" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rt4-Ou-SDU">
+                    <rect key="frame" x="109" y="27" width="102" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a3L-tl-Q4z">
+                    <rect key="frame" x="32" y="519" width="257" height="44"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="257" id="G48-EH-DJg"/>
+                        <constraint firstAttribute="height" constant="44" id="GO1-Yv-Z0n"/>
+                    </constraints>
+                    <state key="normal" title="删除并退出">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="deleteLog:" destination="-1" eventType="touchUpInside" id="fhm-na-yBV"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="P4r-8L-H52" secondAttribute="bottom" constant="50" id="2x2-mz-XrM"/>
+                <constraint firstItem="P4r-8L-H52" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="50" id="3Rv-nD-KSD"/>
+                <constraint firstItem="P4r-8L-H52" firstAttribute="top" secondItem="Rt4-Ou-SDU" secondAttribute="bottom" constant="2" id="8dU-dQ-bI4"/>
+                <constraint firstItem="a3L-tl-Q4z" firstAttribute="centerX" secondItem="P4r-8L-H52" secondAttribute="centerX" id="BF8-8K-daO"/>
+                <constraint firstItem="Rt4-Ou-SDU" firstAttribute="centerX" secondItem="P4r-8L-H52" secondAttribute="centerX" id="IxH-Hx-XXW"/>
+                <constraint firstItem="P4r-8L-H52" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="PA9-mX-drg"/>
+                <constraint firstAttribute="trailing" secondItem="P4r-8L-H52" secondAttribute="trailing" constant="8" id="a2H-Js-jFx"/>
+                <constraint firstItem="a3L-tl-Q4z" firstAttribute="top" secondItem="P4r-8L-H52" secondAttribute="bottom" constant="1" id="p3b-Az-32w"/>
+            </constraints>
+            <point key="canvasLocation" x="460" y="293"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
