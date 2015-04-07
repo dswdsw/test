@@ -26,14 +26,31 @@
  */
 @interface DGridView : DLayoutBaseView
 
-@property (nonatomic, strong) NSArray *crossArray;
+@property (nonatomic , strong )  UIColor *lineColor;
+
+@property (nonatomic , assign ) BOOL isShowLine;
+
+@property (nonatomic , readonly ) NSInteger rowHeight;
 
 - (void)setColumn:(NSInteger)s height:(NSInteger)h;
 
 - (void)addView:(UIView *)view crossColumn:(NSInteger)num;
 
+//
+@property (nonatomic, strong) NSArray *crossArray;
+
 - (void)addViewArray:(NSArray *)array;
+//
 
 - (void)addViewFromXib:(NSString *)xibname point:(CGPoint)point;
+
+- (void)removeRow:(NSInteger)row;
+
+//
+-(void)showRow:(NSInteger)row;
+
+-(void)hideRow:(NSInteger)row;
+
+
 
 @end

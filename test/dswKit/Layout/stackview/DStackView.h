@@ -14,4 +14,8 @@
  */
 @interface DStackView : DLayoutBaseView
 
+
+-(void)addLineForHeight:(CGFloat)h;
+-(void)addLineForHeight:(CGFloat)h color:(UIColor *)color;
+
 @end

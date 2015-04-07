@@ -13,11 +13,12 @@
 
 static char *clickEventKey;
 static char *valueChangeEventKey;
+static char *editChangeKey;
 
 - (void)click:(ClickBlock)buttonClickEvent {
     objc_setAssociatedObject(self, &clickEventKey, buttonClickEvent, OBJC_ASSOCIATION_COPY_NONATOMIC);
 
-    [self addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchDown];
+    [self addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)clickAction:(id)value {
@@ -37,6 +38,21 @@ static char *valueChangeEventKey;
 - (void)valueChangeAction:(id)value {
     ClickBlock blockClick = objc_getAssociatedObject(self, &valueChangeEventKey);
 
+    if (blockClick != nil) {
+        blockClick(value);
+    }
+}
+
+
+-(void)editChange:(ClickBlock)buttonClickEvent
+{
+    objc_setAssociatedObject(self, &editChangeKey, buttonClickEvent, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    
+    [self addTarget:self action:@selector(editChangeAction:) forControlEvents:UIControlEventEditingChanged];
+}
+
+- (void)editChangeAction:(id)value {
+    ClickBlock blockClick = objc_getAssociatedObject(self, &editChangeKey);
     if (blockClick != nil) {
         blockClick(value);
     }

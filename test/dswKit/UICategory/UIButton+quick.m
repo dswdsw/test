@@ -22,4 +22,11 @@
     [self setTitle:title forState:UIControlStateSelected];
 }
 
++( instancetype)button:(buttonBlock)block
+{
+    UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
+    block(button);
+    return button;
+}
+
 @end

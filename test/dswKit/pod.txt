@@ -2,3 +2,4 @@
 pod "ReactiveCocoa"
 pod 'AFNetworking'
 pod 'MBProgressHUD'
+pod 'XMLReader'

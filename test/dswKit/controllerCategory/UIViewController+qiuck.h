@@ -8,10 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^firstLuanchBlock)();
+
 @interface UIViewController (qiuck)
 
-+(instancetype)controller;
++(instancetype)controllerFromXib;
 
 +(instancetype)storyboard:(NSString *)name id:(NSString *)key;
+
+-(void)firstLuanch :(firstLuanchBlock) block key:(NSString *)keys;
+
+-(void)firstLuanch :(firstLuanchBlock) block ;
 
 @end

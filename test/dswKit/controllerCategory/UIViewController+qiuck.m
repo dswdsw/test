@@ -7,18 +7,36 @@
 //
 
 #import "UIViewController+qiuck.h"
+#import "NSString+quick.h"
 
 @implementation UIViewController (qiuck)
 
-+(instancetype)controller
-{
-   return  [[self alloc]initWithNibName:NSStringFromClass([self class]) bundle:nil];
++ (instancetype)controllerFromXib {
+    return [[self alloc]initWithNibName:NSStringFromClass([self class]) bundle:nil];
 }
 
-+(instancetype)storyboard:(NSString *)name id:(NSString *)key
++ (instancetype)storyboard:(NSString *)name id:(NSString *)key {
+    UIStoryboard *stroryboard = [UIStoryboard storyboardWithName:name bundle:nil];
+
+    return [stroryboard instantiateViewControllerWithIdentifier:key];
+}
+
+- (void)firstLuanch:(firstLuanchBlock)block key:(NSString *)keys;
 {
-    UIStoryboard *stroryboard=[UIStoryboard storyboardWithName:name bundle:nil];
-    return  [stroryboard instantiateViewControllerWithIdentifier:key];
+    
+   NSString *VersionKey=  [NSString stringWithFormat:@"v%@", [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey]];
+    
+    NSString *key = NSStringFromClass([self class]).add(@"_").add(keys).add(@"_DSWKey").add(VersionKey);
+    
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:key]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:key];
+        block();
+    }
+}
+
+-(void)firstLuanch :(firstLuanchBlock) block
+{
+    [self firstLuanch:block key:@"default"];
 }
 
 @end

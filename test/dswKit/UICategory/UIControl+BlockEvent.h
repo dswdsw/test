@@ -16,4 +16,6 @@ typedef void (^ ClickBlock)(id value);
 
 - (void)valueChange:(ClickBlock)buttonClickEvent;
 
+-(void)editChange:(ClickBlock)buttonClickEvent;
+
 @end

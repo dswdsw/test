@@ -9,6 +9,14 @@
 #import "DLayoutBaseView.h"
 
 @implementation DLayoutBaseView
+@dynamic setPositions;
+
+- (void (^)(CGFloat x, CGFloat y))setPositions {
+    return ^(CGFloat x, CGFloat y)
+           {
+               [self setOrigin:CGPointMake(x, y)];
+           };
+}
 
 - (instancetype)init {
     self = [super init];
@@ -33,17 +41,16 @@
 
 - (void)addView:(UIView *)view {}
 
+-(void)updateView
+{
+    if ([self.superview isKindOfClass:[DLayoutBaseView class]]) {
+        [( (DLayoutBaseView *)self.superview) updateView];
+    }
+}
+
 - (void)deleteView:(UIView *)view {
     [view removeFromSuperview];
-    NSArray *views = self.subviews;
-
-    for (UIView *item in self.subviews) {
-        [item removeFromSuperview];
-    }
-
-    for (UIView *item in views) {
-        [self addView:item];
-    }
+    [self updateView];
 }
 
 - (void)setOrigin:(CGPoint)point {

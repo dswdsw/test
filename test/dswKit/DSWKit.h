@@ -20,12 +20,24 @@
 #import "UIButton+quick.h"
 #import "UILabel+quick.h"
 #import "UIViewExt.h"
+#import "UITextField+quick.h"
+#import "LPLabel.h"
+#import "UIAlertView+quick.h"
 
 //controller
 #import "UIViewController+qiuck.h"
+#import "UINavigationController+quick.h"
 
 //foundation
-#import "Binding.h"
+#import "DBinding.h"
+#import "NSString+quick.h"
+#import "NSObject+quick.h"
+#import "NSArray+quick.h"
+#import "NSDictionary+quick.h"
+#import "SingelObject.h"
+#import "DTimer.h"
+
+
 
 
 

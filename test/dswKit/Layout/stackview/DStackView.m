@@ -23,14 +23,33 @@
     return self;
 }
 
-- (void)addView:(UIView *)view {
-    if ([self.subviews containsObject:view]) {
-        return;
-    }
+#pragma  mark - LINE
+- (void)addLineForHeight:(CGFloat)h {
+    [self addLineForHeight:h color:[UIColor clearColor]];
+}
 
+- (void)addLineForHeight:(CGFloat)h color:(UIColor *)color {
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, h)];
+
+    view.backgroundColor = color;
+    [self addView:view];
+}
+
+#pragma  mark - ADD
+- (void)addView:(UIView *)view {
+    self.autoresizesSubviews = NO;
     CGRect rect = view.frame;
     rect.origin = currentPoint;
+    rect.size.width = self.frame.size.width;
     view.frame = rect;
+
+    if ([view isKindOfClass:[UILabel class]]) {
+        UILabel *label = (UILabel *)view;
+        label.lineBreakMode = NSLineBreakByWordWrapping;
+        label.numberOfLines = 0;
+        [label sizeToFit];
+    }
+
     [self addSubview:view];
     currentPoint.y += view.frame.size.height;
 
@@ -40,9 +59,26 @@
     self.frame = rect;
 }
 
+#pragma  mark - delete
 - (void)deleteView:(UIView *)view {
     currentPoint = CGPointZero;
     [super deleteView:view];
+}
+
+- (void)clearSubviews {
+    [super clearSubviews];
+    currentPoint = CGPointZero;
+}
+
+#pragma  mark - update
+- (void)updateView {
+    currentPoint = CGPointZero;
+
+    for (UIView *item in self.subviews) {
+        [self addView:item];
+    }
+
+    [super updateView];
 }
 
 @end

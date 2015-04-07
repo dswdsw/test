@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIView+quick.h"
 
 @interface DLayoutBaseView : UIView
 {
@@ -17,8 +18,13 @@
 
 - (void)setOrigin:(CGPoint)point;
 
+@property (nonatomic , readonly ) void (^setPositions)(CGFloat x, CGFloat y);
+
+
 - (void)addView:(UIView *)view;
 
 - (void)deleteView:(UIView *)view;
+
+-(void)updateView;
 
 @end

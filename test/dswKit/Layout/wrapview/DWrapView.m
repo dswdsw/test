@@ -14,9 +14,7 @@
 }
 
 - (void)addView:(UIView *)view {
-    if ([self.subviews containsObject:view]) {
-        return;
-    }
+    self.autoresizesSubviews = NO;
 
     if (self.subHeight == 0) {
         self.subHeight = 44;
@@ -52,6 +50,19 @@
 - (void)deleteView:(UIView *)view {
     currectFrame = CGRectZero;
     [super deleteView:view];
+}
+
+- (void)clearSubviews {
+    [super clearSubviews];
+    currectFrame = CGRectZero;
+}
+
+- (void)updateView {
+    currectFrame = CGRectZero;
+    for (UIView *item in self.subviews) {
+        [self addView:item];
+    }
+    [super updateView];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef void  (^buttonBlock)(UIButton *button);
 
 @interface UIButton (quick)
 
@@ -15,5 +16,7 @@
 - (void)setTitleForHighlighted:(NSString *)title;
 
 - (void)setTitleForSelected:(NSString *)title;
+
++( instancetype)button:(buttonBlock)block;
 
 @end

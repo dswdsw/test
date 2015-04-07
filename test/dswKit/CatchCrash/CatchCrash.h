@@ -12,6 +12,7 @@
 #define CRASH NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler); UIViewController *controller = [CatchCrash openCatchCrash]; \
     if (controller) {                                                                                                               \
         self.window.rootViewController = controller;                                                                                \
+        return YES;                                                                                                                 \
     }
 
 @interface CatchCrash : NSObject
