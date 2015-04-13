@@ -12,17 +12,19 @@ typedef void(^tapBlcok)();
 
 @interface UIView (quick) <UIGestureRecognizerDelegate>
  
-
-- (void)setRectOriginX:(CGFloat)x OriginY:(CGFloat)y width:(CGFloat)width widthRatioHeight:(CGFloat)ratio;
-
-- (void)setRectOriginX:(CGFloat)x OriginY:(CGFloat)y height:(CGFloat)height heightRatioWidth:(CGFloat)ratio;
-
 + (instancetype)viewNib;
 
 /**
  *  清空子视图
  */
 - (void)clearSubviews;
+
+
+/**
+ *  所有子视图
+ *
+ */
+- (NSMutableArray *)allSubviews;
 
 /**
  *  设置底部线条

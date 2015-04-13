@@ -10,6 +10,7 @@
 #import "NSObject+quick.h"
 #import <objc/runtime.h>
 #import "UIViewExt.h"
+#import "UILabel+quick.h"
 
 //
 #pragma mark - 网格
@@ -46,21 +47,6 @@ static char *columnNumKey;
 @end
 //
 
-#pragma mark - 行列
-@implementation DCrossColumn
-
-- (instancetype)initColumn:(NSInteger)column crossColumn:(NSInteger)num {
-    self = [super init];
-
-    if (self) {
-        self.column = column;
-        self.crossNum = num;
-    }
-
-    return self;
-}
-
-@end
 
 #pragma mark - grid
 
@@ -77,14 +63,20 @@ static char *columnNumKey;
 
     // 隐藏的行
     NSMutableArray *hideRowList;
-    
+
     //
     NSMutableArray *lineList;
+    
+    NSMutableDictionary *dicRowHeight;
 }
 
 - (void)setColumn:(NSInteger)s height:(NSInteger)h {
-    lineList=[ NSMutableArray new ];
+    lineList = [NSMutableArray new];
+    self.lineColor=[UIColor colorWithWhite:0.4 alpha:0.5];
     
+    dicRowHeight=[NSMutableDictionary new ];
+
+    self.isShowLine=YES;
     column = s;
     rowHeight = h;
 
@@ -99,9 +91,56 @@ static char *columnNumKey;
     NSAssert(configNum == 1, @"setColumn只能调用一次");
 }
 
--(NSInteger)rowHeight
-{
+- (NSInteger)rowHeight {
     return rowHeight;
+}
+
+
+
+#pragma mark size
+-(void)recordHeight :(UIView *)view
+{
+    NSString * key=view.row.toString(); //行
+    CGFloat height=view.height;
+    
+    if (dicRowHeight[key]) {
+        if ( [dicRowHeight[key] floatValue] <height) {
+            dicRowHeight[key]=@(height);
+        }
+    }
+    else
+    {
+        dicRowHeight[key]=@(height);
+    }
+}
+
+-(CGFloat)getRowHeight:(NSInteger)row
+{
+    NSString * key=@(row).toString(); //行
+    if ( dicRowHeight[key]) {
+        return  [dicRowHeight[key] floatValue];
+    }
+    return rowHeight;
+}
+
+-(CGFloat)getAllHeight
+{
+
+    CGFloat sum=0;
+    
+    for (int i=0; i< currentRow ; i++) {
+        sum+= [self getRowHeight:i];
+    }
+    return sum;
+}
+
+-(CGFloat)getHeightToRow:(NSInteger)row
+{
+    CGFloat sum=0;
+    for (int i=0; i<= row ; i++) {
+        sum+= [self getRowHeight:i];
+    }
+    return sum;
 }
 
 #pragma mark  add
@@ -112,7 +151,6 @@ static char *columnNumKey;
 
 - (void)addView:(UIView *)view crossColumn:(NSInteger)num {
     self.autoresizesSubviews = NO;
-
     // 异常
     NSAssert(column > 0, @"Column 列数不得为0");
     //
@@ -122,63 +160,57 @@ static char *columnNumKey;
     rect = view.frame;
 
     // 隐藏一行
-    CGFloat htemp = rowHeight;
-
+    CGFloat  htemp=[self getRowHeight:currentRow];
+    
     if (view.hidden) {
         htemp = 0;
 
         if (![hideRowList containsObject:@(currentRow)]) {
             [hideRowList addObject:@(currentRow)];
         }
-    } else {
-        htemp = rowHeight;
     }
-
+   
     //
-
     rect.size = CGSizeMake(columnWidth, htemp);
-    rect.origin = CGPointMake(currentColumn * ((self.frame.size.width - 20) / column) + 10, currentRow * rowHeight);
+    rect.origin = CGPointMake(currentColumn * ((self.frame.size.width - 20) / column) + 10, [self getAllHeight]);
     view.frame = rect;
     view.row = @(currentRow);
     view.columnNum = @(num);
+    
+    [self recordHeight:view];
+    
+    if ([view isKindOfClass:[UILabel class]]) {
+        UILabel *tlb=(UILabel *)view;
+        [tlb autoHeight];
+        if (tlb.height<htemp) {
+            tlb.height=htemp;
+        }
+        [self recordHeight:view];
+    }
+    
+    
     [self addSubview:view];
+    
+    
     //
     currentColumn += num;
-
     if (currentColumn >= column) {
         currentRow += 1;
         currentColumn = 0;
     }
-
     //
     rect = self.frame;
-    rect.size.height = (currentRow - hideRowList.count) * rowHeight;
+    
+    rect.size.height = [self getAllHeight];
+    for (NSNumber * item in hideRowList) {
+        rect.size.height-=  [self getRowHeight:[ item integerValue]];
+    }
+  
     self.frame = rect;
-    
-    if (self.isShowLine) {
-        [self ShowBorderLine];
-    }
-    else
-    {
-        [self hideBorderLine];
-    }
-    
+
+    [self setBorder];
 }
 
-- (void)addViewArray:(NSArray *)array {
-    for (UIView *item in array) {
-        NSInteger crossColumn = 1;
-
-        for (DCrossColumn *item in self.crossArray) {
-            if (currentColumn == item.column) {
-                crossColumn = item.crossNum;
-                break;
-            }
-        }
-
-        [self addView:item crossColumn:crossColumn];
-    }
-}
 
 - (void)deleteView:(UIView *)view {
     currentRow = 0;
@@ -186,16 +218,6 @@ static char *columnNumKey;
     [super deleteView:view];
 }
 
-- (void)addViewFromXib:(NSString *)xibname point:(CGPoint)point {
-    NSMutableArray *array = [NSMutableArray new];
-
-    for (int i = point.x; i <= point.y; i++) {
-        NSArray *xibs = [[NSBundle mainBundle]loadNibNamed:xibname owner:self options:nil];
-        [array addObject:xibs[i]];
-    }
-
-    [self addViewArray:array];
-}
 
 #pragma mark  remove
 
@@ -245,56 +267,56 @@ static char *columnNumKey;
 - (void)updateView {
     currentRow = 0;
     currentColumn = 0;
-
+    
+    for (CALayer *item in lineList) {
+        [item removeFromSuperlayer];
+    }
+    [lineList removeAllObjects];
+    
     for (UIView *item in self.subviews) {
         [self addView:item crossColumn:[item.columnNum intValue]];
     }
 
     [super updateView];
-    
-
 }
 
 
-#pragma mark 线条
--(void)ShowBorderLine
+-(void)setBorder
 {
-    
-    [self hideBorderLine];
-    
-    if (!self.lineColor) {
-        self.lineColor=[UIColor grayColor];
-    }
-    
-    self.layer.cornerRadius = 4;
-    self.layer.masksToBounds = YES;
-    self.layer.borderWidth = 0.5;
-    self.layer.borderColor = self.lineColor.CGColor;
-    
-    int count=(currentRow - hideRowList.count);
-    
-    if (count > 0) {
-        for (int i = 0; i < count; i++) {
-            CALayer *layer=[CALayer new];
-            layer.frame=CGRectMake(0, i*rowHeight-0.25, self.width, 0.5);
-            layer.backgroundColor=self.lineColor.CGColor;
-            [self.layer addSublayer:layer];
-            [lineList addObject:layer];
+    //border
+    if (dicRowHeight.allKeys.count>1) {
+        if (self.isShowLine ) {
+            self.layer.cornerRadius = 4;
+            self.layer.masksToBounds = YES;
+            self.layer.borderWidth = 0.5;
+            self.layer.borderColor = self.lineColor.CGColor;
+            
+            for (CALayer *item in lineList) {
+                [item removeFromSuperlayer];
+            }
+            [lineList removeAllObjects];
+            for (int i=0; i< dicRowHeight.allKeys.count-1 -hideRowList.count; i++) {
+                    CALayer *layer = [CALayer new];
+                    layer.frame = CGRectMake(0, [self getHeightToRow:i] - 0.5, self.width, 0.5);
+                    layer.backgroundColor = self.lineColor.CGColor;
+                    [self.layer addSublayer:layer];
+                    [lineList addObject:layer];
+            }
+        }
+        else {
+            
+            self.layer.cornerRadius = 0;
+            self.layer.masksToBounds = YES;
+            self.layer.borderWidth = 0;
+            self.layer.borderColor = self.lineColor.CGColor;
+            
+            for (CALayer *item in lineList) {
+                [item removeFromSuperlayer];
+            }
+            [lineList removeAllObjects];
         }
     }
 
-}
-
--(void)hideBorderLine
-{
-    
-    self.layer.cornerRadius =0;
-    self.layer.masksToBounds = YES;
-    self.layer.borderWidth = 0;
-
-    for (CALayer * item in lineList) {
-        [item removeFromSuperlayer];
-    }
 }
 
 @end

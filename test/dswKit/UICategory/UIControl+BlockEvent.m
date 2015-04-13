@@ -15,28 +15,28 @@ static char *clickEventKey;
 static char *valueChangeEventKey;
 static char *editChangeKey;
 
-- (void)click:(ClickBlock)buttonClickEvent {
-    objc_setAssociatedObject(self, &clickEventKey, buttonClickEvent, OBJC_ASSOCIATION_COPY_NONATOMIC);
+- (void)click:(eventBlock)block {
+    objc_setAssociatedObject(self, &clickEventKey, block, OBJC_ASSOCIATION_COPY_NONATOMIC);
 
     [self addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)clickAction:(id)value {
-    ClickBlock blockClick = objc_getAssociatedObject(self, &clickEventKey);
+    eventBlock blockClick = objc_getAssociatedObject(self, &clickEventKey);
 
     if (blockClick != nil) {
         blockClick(value);
     }
 }
 
-- (void)valueChange:(ClickBlock)buttonClickEvent {
-    objc_setAssociatedObject(self, &valueChangeEventKey, buttonClickEvent, OBJC_ASSOCIATION_COPY_NONATOMIC);
+- (void)valueChange:(eventBlock)block {
+    objc_setAssociatedObject(self, &valueChangeEventKey, block, OBJC_ASSOCIATION_COPY_NONATOMIC);
 
     [self addTarget:self action:@selector(valueChangeAction:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)valueChangeAction:(id)value {
-    ClickBlock blockClick = objc_getAssociatedObject(self, &valueChangeEventKey);
+    eventBlock blockClick = objc_getAssociatedObject(self, &valueChangeEventKey);
 
     if (blockClick != nil) {
         blockClick(value);
@@ -44,15 +44,15 @@ static char *editChangeKey;
 }
 
 
--(void)editChange:(ClickBlock)buttonClickEvent
+-(void)editChange:(eventBlock)block
 {
-    objc_setAssociatedObject(self, &editChangeKey, buttonClickEvent, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self, &editChangeKey, block, OBJC_ASSOCIATION_COPY_NONATOMIC);
     
     [self addTarget:self action:@selector(editChangeAction:) forControlEvents:UIControlEventEditingChanged];
 }
 
 - (void)editChangeAction:(id)value {
-    ClickBlock blockClick = objc_getAssociatedObject(self, &editChangeKey);
+    eventBlock blockClick = objc_getAssociatedObject(self, &editChangeKey);
     if (blockClick != nil) {
         blockClick(value);
     }

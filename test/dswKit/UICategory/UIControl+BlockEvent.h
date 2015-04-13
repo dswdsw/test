@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^ ClickBlock)(id value);
+typedef void (^ eventBlock)(id value);
 
 @interface UIControl (BlockEvent)
 
-- (void)click:(ClickBlock)buttonClickEvent;
+- (void)click:(eventBlock)block;
 
-- (void)valueChange:(ClickBlock)buttonClickEvent;
+- (void)valueChange:(eventBlock)block;
 
--(void)editChange:(ClickBlock)buttonClickEvent;
+-(void)editChange:(eventBlock)block;
 
 @end

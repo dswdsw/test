@@ -15,14 +15,6 @@
 
 @dynamic viewController;
 
-- (void)setRectOriginX:(CGFloat)x OriginY:(CGFloat)y width:(CGFloat)width widthRatioHeight:(CGFloat)ratio {
-    self.frame = CGRectMake(x, y, width, width / ratio);
-}
-
-- (void)setRectOriginX:(CGFloat)x OriginY:(CGFloat)y height:(CGFloat)height heightRatioWidth:(CGFloat)ratio {
-    self.frame = CGRectMake(x, y, height / ratio, height);
-}
-
 + (instancetype)viewNib {
     UIView  *result = nil;
     NSArray *elements = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class])
@@ -43,6 +35,20 @@
         [item removeFromSuperview];
     }
 }
+
+- (void)dumpView:(UIView *)aView atIndent:(int)indent into:(NSMutableArray *)outArray {
+    [outArray addObject:aView];
+    for (UIView *view in [aView subviews]) {
+        [self dumpView:view atIndent:indent + 1 into:outArray];
+    }
+}
+
+- (NSMutableArray *)allSubviews {
+    NSMutableArray *outViews=[NSMutableArray new ];
+    [self dumpView:self atIndent:0 into:outViews];
+    return outViews;
+}
+
 
 - (void)setBottomLine:(UIColor *)color;
 {

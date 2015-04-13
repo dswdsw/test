@@ -14,8 +14,13 @@
  */
 @interface DStackView : DLayoutBaseView
 
+- (void)addLineForHeight:(CGFloat)h;
 
--(void)addLineForHeight:(CGFloat)h;
--(void)addLineForHeight:(CGFloat)h color:(UIColor *)color;
+- (void)addLineForHeight:(CGFloat)h color:(UIColor *)color;
+
+/**
+ *  距离父视图边距
+ */
+@property (nonatomic, assign) CGFloat offsetX;
 
 @end

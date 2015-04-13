@@ -23,6 +23,7 @@
 #import "UITextField+quick.h"
 #import "LPLabel.h"
 #import "UIAlertView+quick.h"
+#import "UIScrollView+quick.h"
 
 //controller
 #import "UIViewController+qiuck.h"

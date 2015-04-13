@@ -10,6 +10,8 @@
 
 typedef id (^mapBlock)(id obj);
 
+typedef  BOOL (^filterBlock) (id evaluatedObject, NSDictionary *bindings);
+
 @interface NSArray (quick)
 
 /**
@@ -29,5 +31,14 @@ typedef id (^mapBlock)(id obj);
  *  @return 新列表
  */
 -(NSArray *)map :(mapBlock)block ;
+
+/**
+ *  过滤
+ *
+ *  @param block
+ *
+ *  @return 
+ */
+-(NSArray *)filtered: (filterBlock) block;
 
 @end

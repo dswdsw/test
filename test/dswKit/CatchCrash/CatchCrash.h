@@ -9,10 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#define CRASH NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler); UIViewController *controller = [CatchCrash openCatchCrash]; \
-    if (controller) {                                                                                                               \
-        self.window.rootViewController = controller;                                                                                \
-        return YES;                                                                                                                 \
+#define CRASH NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler); UIViewController *controller = [CatchCrash openCatchCrash];                                              \
+    if (controller) {                                                                                                                                                            \
+        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]; [self.window makeKeyAndVisible]; self.window.rootViewController = controller; return YES; \
     }
 
 @interface CatchCrash : NSObject

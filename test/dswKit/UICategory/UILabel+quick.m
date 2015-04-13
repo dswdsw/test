@@ -7,8 +7,8 @@
 //
 
 #import "UILabel+quick.h"
-
-
+#import "UIViewExt.h"
+#import "NSObject+quick.h"
 
 @implementation UILabel (quick)
 
@@ -32,5 +32,60 @@
     block(label);
     return label;
 }
+
+
+-(void)addRightImg:(NSString *)imgName
+{
+    CALayer *layer=[[CALayer alloc]init];
+    layer.tagName=@"right";
+    layer.frame=CGRectMake(self.width, 0, self.height, self.height);
+    layer.contents=(id) [UIImage imageNamed:imgName].CGImage;
+    [self.layer addSublayer:layer];
+    
+    [self addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionInitial context:nil];
+}
+
+-(void)addLeftImg:(NSString *)imgName
+{
+    CALayer *layer=[[CALayer alloc]init];
+    layer.tagName=@"left";
+    layer.frame=CGRectMake(-self.height, 0, self.height, self.height);
+    layer.contents=(id) [UIImage imageNamed:imgName].CGImage;
+    [self.layer addSublayer:layer];
+    
+    [self addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionInitial context:nil];
+}
+
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+   
+    if ([keyPath isEqualToString:@"text"]) {
+        [self sizeToFit];
+        
+        for (CALayer *item in self.layer.sublayers) {
+            if ([item.tagName isEqualToString:@"right"]) {
+                item.frame=CGRectMake(self.width, 0, self.height, self.height);
+            }
+            else if ([item.tagName isEqualToString:@"left"])
+            {
+                 item.frame=CGRectMake(-self.height, 0, self.height, self.height);
+            }
+        }
+    }
+}
+
+-(void)autoHeight
+{
+    CGSize size = CGSizeMake(self.frame.size.width,2000);
+    CGRect labelRect = [self.text boundingRectWithSize:size options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)  attributes:[NSDictionary dictionaryWithObject:self.font forKey:NSFontAttributeName] context:nil];
+    self.frame=CGRectMake(self.frame.origin.x,self.frame.origin.y , labelRect.size.width, labelRect.size.height);
+    self.lineBreakMode=NSLineBreakByCharWrapping;
+    self.numberOfLines=0;
+}
+
+//-(void)dealloc
+//{
+//    [self removeObserver:self forKeyPath:@"text"];
+//}
 
 @end

@@ -39,5 +39,10 @@
     }
     return array;
 }
+-(NSArray *)filtered: (filterBlock) block
+{
+   return  [self filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:block]];
+}
+
 
 @end

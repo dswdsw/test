@@ -26,18 +26,10 @@
 - (NSString *(^)(NSString *, NSString *))removeRange {
     return ^(NSString *startstr, NSString *endstr)
            {
-               NSRange rg1 = [self rangeOfString:startstr];
 
-               NSRange rg2 = [self rangeOfString:endstr];
-
-               if (rg1.location==NSNotFound || rg2.location==NSNotFound) {
-                   return self;
-               }
-               NSAssert(rg1.location < rg2.location, @"end 位置大于 start 位置");
-
-               NSRange range = NSMakeRange(rg1.location, labs(rg2.location + rg2.length - rg1.location));
-
-               return [self stringByReplacingCharactersInRange:range withString:@""];
+               NSString *regstr=[NSString stringWithFormat:@"['%@'].*['%@']",startstr,endstr];
+               
+               return [self regex:regstr replace:@""];
            };
 }
 
@@ -80,43 +72,40 @@
         }
     }
 
-    if (rangeArr.count==0) {
+    if (rangeArr.count == 0) {
         return nil;
     }
+
     return rangeArr;
 }
 
--(void)findstrWithregex:(NSString *)reg done:(regBlock) block
-{
-   NSArray *array=  [self findstrWithregex:reg];
-    for (NSValue * item in array) {
+- (void)findstrWithregex:(NSString *)reg done:(regBlock)block {
+    NSArray *array = [self findstrWithregex:reg];
+
+    for (NSValue *item in array) {
         block(item.rangeValue);
     }
 }
 
--(NSString *)map:(mapStrBlock)Block
-{
-    NSString *str= Block(self);
-   return  str;
-    
+- (NSString *)map:(mapStrBlock)Block {
+    NSString *str = Block(self);
+
+    return str;
 }
 
+- (NSString *)replaceUnicode {
+    NSString    *unicodeStr = self;
+    NSString    *tempStr1 = [unicodeStr stringByReplacingOccurrencesOfString:@"\\u"withString:@"\\U"];
+    NSString    *tempStr2 = [tempStr1 stringByReplacingOccurrencesOfString:@"\""withString:@"\\\""];
+    NSString    *tempStr3 = [[@"\""stringByAppendingString : tempStr2] stringByAppendingString:@"\""];
+    NSData      *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
+    NSString    *returnStr = [NSPropertyListSerialization propertyListFromData:tempData
+        mutabilityOption:NSPropertyListImmutable
+        format          :NULL
+        errorDescription:NULL];
 
-
-- (NSString *)replaceUnicode
-{
-    NSString *unicodeStr=self;
-    NSString *tempStr1 = [unicodeStr stringByReplacingOccurrencesOfString:@"\\u"withString:@"\\U"];
-    NSString *tempStr2 = [tempStr1 stringByReplacingOccurrencesOfString:@"\""withString:@"\\\""];
-    NSString *tempStr3 = [[@"\""stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
-    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
-    NSString* returnStr = [NSPropertyListSerialization propertyListFromData:tempData
-                                                           mutabilityOption:NSPropertyListImmutable
-                                                                     format:NULL
-                                                           errorDescription:NULL];
-//    NSLog(@"%@",returnStr);
+    //    NSLog(@"%@",returnStr);
     return [returnStr stringByReplacingOccurrencesOfString:@"\\r\\n"withString:@"\n"];
 }
-
 
 @end

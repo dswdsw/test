@@ -13,7 +13,7 @@
 @implementation UITextField (quick)
 
 //
-+ (instancetype)textChange:(ClickBlock)block fontSize:(CGFloat)size delegate:(id<UITextFieldDelegate>)delegate placehold:(NSString *)str defaultText:(NSString *)dt fontColor:(UIColor *)color {
++ (instancetype)textChange:(eventBlock)block fontSize:(CGFloat)size delegate:(id<UITextFieldDelegate>)delegate placehold:(NSString *)str defaultText:(NSString *)dt fontColor:(UIColor *)color {
     UITextField *text = [UITextField new];
 
     [text editChange:block];
@@ -109,5 +109,21 @@ static char *dropKey;
 }
 
 //
+
+#pragma  mark - 图标
+-(void)setRightImage:(NSString *)imageName
+{
+    UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+    self.rightView = img;
+    self.rightViewMode = UITextFieldViewModeAlways;
+}
+
+
+-(void)setLeftImage:(NSString *)imageName;
+{
+     UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+    [self setLeftView:img];
+    self.leftViewMode=UITextFieldViewModeAlways;
+}
 
 @end

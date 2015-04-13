@@ -32,15 +32,22 @@
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, h)];
 
     view.backgroundColor = color;
+    CGFloat temp=self.offsetX;
+    
+    self.offsetX=0;
     [self addView:view];
+    self.offsetX=temp;
 }
 
 #pragma  mark - ADD
 - (void)addView:(UIView *)view {
+    currentPoint.x=self.offsetX;
+    
     self.autoresizesSubviews = NO;
     CGRect rect = view.frame;
     rect.origin = currentPoint;
-    rect.size.width = self.frame.size.width;
+    
+    rect.size.width = self.frame.size.width-self.offsetX*2;
     view.frame = rect;
 
     if ([view isKindOfClass:[UILabel class]]) {

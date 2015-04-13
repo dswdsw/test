@@ -8,6 +8,7 @@
 
 #import "DWrapView.h"
 
+
 @implementation DWrapView
 {
     CGRect currectFrame;
@@ -63,6 +64,12 @@
         [self addView:item];
     }
     [super updateView];
+}
+
+
+-(CGFloat)getItemWidth :(NSInteger) num
+{
+    return (self.width-(self.xOffset*num+1)-1)/num;
 }
 
 @end

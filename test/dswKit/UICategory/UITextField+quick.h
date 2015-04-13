@@ -12,7 +12,7 @@ typedef void (^ textFieldBlock)(UITextField *textField);
 
 @interface UITextField (quick) <UIPickerViewDataSource,UIPickerViewDelegate>
 
-+ (instancetype)textChange:(ClickBlock)block fontSize:(CGFloat)size delegate:(id<UITextFieldDelegate>)delegate placehold:(NSString *)str defaultText:(NSString *)dt fontColor:(UIColor *)color;
++ (instancetype)textChange:(eventBlock)block fontSize:(CGFloat)size delegate:(id<UITextFieldDelegate>)delegate placehold:(NSString *)str defaultText:(NSString *)dt fontColor:(UIColor *)color;
 
 + (instancetype)textField:(textFieldBlock)block;
 
@@ -27,5 +27,9 @@ typedef void (^ textFieldBlock)(UITextField *textField);
  *  @param data 数据源
  */
 -(void)setInputDropList:(NSArray *)data;
+
+-(void)setRightImage:(NSString *)imageName;
+
+-(void)setLeftImage:(NSString *)imageName;
 
 @end

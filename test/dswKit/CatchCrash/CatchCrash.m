@@ -9,6 +9,7 @@
 #import "CatchCrash.h"
 #import <UIKit/UIKit.h>
 #import "WLErrorTipViewController.h"
+#import "UIViewController+qiuck.h"
 
 @implementation CatchCrash
 
@@ -16,7 +17,7 @@
     WLErrorTipViewController *controller;
 
     if ([WLErrorTipViewController hasCrash]) {
-        controller = [[WLErrorTipViewController alloc] initWithNibName:@"WLErrorTipViewController" bundle:nil];
+        controller = [WLErrorTipViewController controllerFromXib];
     }
 
     return controller;
@@ -26,7 +27,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     // 异常的堆栈信息
     NSArray *stackArray = [exception callStackSymbols];
 
-    NSLog(@"%@", [stackArray[0] class]);
+   // NSLog(@"%@", [stackArray[0] class]);
 
     // 出现异常的原因
     NSString *reason = [exception reason];
@@ -42,6 +43,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             [exceptionInfo appendFormat:@"<br>"];
         }
     }
+    
+    NSLog(@"%@",[exceptionInfo stringByReplacingOccurrencesOfString:@"<br>" withString:@"\n"]);
 
     NSMutableArray *tmpArr = [NSMutableArray arrayWithArray:stackArray];
     [tmpArr insertObject:reason atIndex:0];
