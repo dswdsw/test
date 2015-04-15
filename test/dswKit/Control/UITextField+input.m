@@ -8,6 +8,8 @@
 
 #import "UITextField+input.h"
 #import <objc/runtime.h>
+#import "UIViewExt.h"
+#import "UIControl+BlockEvent.h"
 
 @implementation UITextField (input)
 
