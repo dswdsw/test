@@ -7,10 +7,8 @@
 //
 
 #import "DGridView.h"
-#import "NSObject+quick.h"
 #import <objc/runtime.h>
-#import "UIViewExt.h"
-#import "UILabel+quick.h"
+#import "NSObject+quick.h"
 
 //
 #pragma mark - 网格
@@ -47,6 +45,31 @@ static char *columnNumKey;
 @end
 //
 
+//处理label
+@interface UILabel (autoHeight)
+
+-(void)autoHeight;
+
+@end
+
+@implementation UILabel (autoHeight)
+
+- (void)autoHeight {
+    CGSize size = CGSizeMake(self.frame.size.width, 2000);
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0) {
+        CGSize labelsize = [self.text sizeWithFont:self.font constrainedToSize:size lineBreakMode:NSLineBreakByCharWrapping];
+        self.height = labelsize.height;
+        self.numberOfLines = 0;
+    } else {
+        CGRect labelRect = [self.text boundingRectWithSize:size options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)  attributes:[NSDictionary dictionaryWithObject:self.font forKey:NSFontAttributeName] context:nil];
+        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, labelRect.size.width, labelRect.size.height);
+        self.lineBreakMode = NSLineBreakByCharWrapping;
+        self.numberOfLines = 0;
+    }
+}
+
+@end
 
 #pragma mark - grid
 
@@ -66,17 +89,21 @@ static char *columnNumKey;
 
     //
     NSMutableArray *lineList;
-    
+
     NSMutableDictionary *dicRowHeight;
+}
+
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+    [self updateView];
 }
 
 - (void)setColumn:(NSInteger)s height:(NSInteger)h {
     lineList = [NSMutableArray new];
-    self.lineColor=[UIColor colorWithWhite:0.4 alpha:0.5];
-    
-    dicRowHeight=[NSMutableDictionary new ];
+    self.lineColor = [UIColor colorWithWhite:0.4 alpha:0.5];
 
-    self.isShowLine=YES;
+    dicRowHeight = [NSMutableDictionary new];
+
+    self.isShowLine = YES;
     column = s;
     rowHeight = h;
 
@@ -95,51 +122,47 @@ static char *columnNumKey;
     return rowHeight;
 }
 
-
-
 #pragma mark size
--(void)recordHeight :(UIView *)view
-{
-    NSString * key=view.row.toString(); //行
-    CGFloat height=view.height;
-    
+- (void)recordHeight:(UIView *)view {
+    NSString    *key = view.row.toString(); // 行
+    CGFloat     height = view.height;
+
     if (dicRowHeight[key]) {
-        if ( [dicRowHeight[key] floatValue] <height) {
-            dicRowHeight[key]=@(height);
+        if ([dicRowHeight[key] floatValue] < height) {
+            dicRowHeight[key] = @(height);
         }
-    }
-    else
-    {
-        dicRowHeight[key]=@(height);
+    } else {
+        dicRowHeight[key] = @(height);
     }
 }
 
--(CGFloat)getRowHeight:(NSInteger)row
-{
-    NSString * key=@(row).toString(); //行
-    if ( dicRowHeight[key]) {
-        return  [dicRowHeight[key] floatValue];
+- (CGFloat)getRowHeight:(NSInteger)row {
+    NSString *key = @(row).toString(); // 行
+
+    if (dicRowHeight[key]) {
+        return [dicRowHeight[key] floatValue];
     }
+
     return rowHeight;
 }
 
--(CGFloat)getAllHeight
-{
+- (CGFloat)getAllHeight {
+    CGFloat sum = 0;
 
-    CGFloat sum=0;
-    
-    for (int i=0; i< currentRow ; i++) {
-        sum+= [self getRowHeight:i];
+    for (int i = 0; i < currentRow; i++) {
+        sum += [self getRowHeight:i];
     }
+
     return sum;
 }
 
--(CGFloat)getHeightToRow:(NSInteger)row
-{
-    CGFloat sum=0;
-    for (int i=0; i<= row ; i++) {
-        sum+= [self getRowHeight:i];
+- (CGFloat)getHeightToRow:(NSInteger)row {
+    CGFloat sum = 0;
+
+    for (int i = 0; i <= row; i++) {
+        sum += [self getRowHeight:i];
     }
+
     return sum;
 }
 
@@ -155,13 +178,13 @@ static char *columnNumKey;
     NSAssert(column > 0, @"Column 列数不得为0");
     //
     CGRect  rect = self.frame;
-    CGFloat columnWidth = (self.frame.size.width - 20) / column * num;
+    CGFloat columnWidth = (self.frame.size.width - column*2) / column * num;
 
     rect = view.frame;
 
     // 隐藏一行
-    CGFloat  htemp=[self getRowHeight:currentRow];
-    
+    CGFloat htemp = [self getRowHeight:currentRow];
+
     if (view.hidden) {
         htemp = 0;
 
@@ -169,55 +192,62 @@ static char *columnNumKey;
             [hideRowList addObject:@(currentRow)];
         }
     }
-   
+
     //
     rect.size = CGSizeMake(columnWidth, htemp);
     rect.origin = CGPointMake(currentColumn * ((self.frame.size.width - 20) / column) + 10, [self getAllHeight]);
     view.frame = rect;
     view.row = @(currentRow);
     view.columnNum = @(num);
-    
+
     [self recordHeight:view];
-    
-    if ([view isKindOfClass:[UILabel class]]) {
-        UILabel *tlb=(UILabel *)view;
-        [tlb autoHeight];
-        if (tlb.height<htemp) {
-            tlb.height=htemp;
+
+    if ([view isKindOfClass:[UITextField class]]) {
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0) {
+            ((UITextField *)view).contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         }
+    }
+
+    if ([view isKindOfClass:[UILabel class]]) {
+        UILabel *tlb = (UILabel *)view;
+        [tlb autoHeight];
+
+        if (tlb.height < htemp) {
+            tlb.height = htemp;
+        }
+
         [self recordHeight:view];
     }
-    
-    
+
     [self addSubview:view];
-    
-    
+
     //
     currentColumn += num;
+
     if (currentColumn >= column) {
         currentRow += 1;
         currentColumn = 0;
     }
+
     //
     rect = self.frame;
-    
+
     rect.size.height = [self getAllHeight];
-    for (NSNumber * item in hideRowList) {
-        rect.size.height-=  [self getRowHeight:[ item integerValue]];
+
+    for (NSNumber *item in hideRowList) {
+        rect.size.height -= [self getRowHeight:[item integerValue]];
     }
-  
+
     self.frame = rect;
 
     [self setBorder];
 }
-
 
 - (void)deleteView:(UIView *)view {
     currentRow = 0;
     currentColumn = 0;
     [super deleteView:view];
 }
-
 
 #pragma mark  remove
 
@@ -267,12 +297,13 @@ static char *columnNumKey;
 - (void)updateView {
     currentRow = 0;
     currentColumn = 0;
-    
+
     for (CALayer *item in lineList) {
         [item removeFromSuperlayer];
     }
+
     [lineList removeAllObjects];
-    
+
     for (UIView *item in self.subviews) {
         [self addView:item crossColumn:[item.columnNum intValue]];
     }
@@ -280,43 +311,41 @@ static char *columnNumKey;
     [super updateView];
 }
 
-
--(void)setBorder
-{
-    //border
-    if (dicRowHeight.allKeys.count>1) {
-        if (self.isShowLine ) {
+- (void)setBorder {
+    // border
+    if (dicRowHeight.allKeys.count > 1) {
+        if (self.isShowLine) {
             self.layer.cornerRadius = 4;
             self.layer.masksToBounds = YES;
             self.layer.borderWidth = 0.5;
             self.layer.borderColor = self.lineColor.CGColor;
-            
+
             for (CALayer *item in lineList) {
                 [item removeFromSuperlayer];
             }
+
             [lineList removeAllObjects];
-            for (int i=0; i< dicRowHeight.allKeys.count-1 -hideRowList.count; i++) {
-                    CALayer *layer = [CALayer new];
-                    layer.frame = CGRectMake(0, [self getHeightToRow:i] - 0.5, self.width, 0.5);
-                    layer.backgroundColor = self.lineColor.CGColor;
-                    [self.layer addSublayer:layer];
-                    [lineList addObject:layer];
+
+            for (int i = 0; i < dicRowHeight.allKeys.count - 1 - hideRowList.count; i++) {
+                CALayer *layer = [CALayer new];
+                layer.frame = CGRectMake(0, [self getHeightToRow:i] - 0.5, self.width, 0.5);
+                layer.backgroundColor = self.lineColor.CGColor;
+                [self.layer addSublayer:layer];
+                [lineList addObject:layer];
             }
-        }
-        else {
-            
+        } else {
             self.layer.cornerRadius = 0;
             self.layer.masksToBounds = YES;
             self.layer.borderWidth = 0;
             self.layer.borderColor = self.lineColor.CGColor;
-            
+
             for (CALayer *item in lineList) {
                 [item removeFromSuperlayer];
             }
+
             [lineList removeAllObjects];
         }
     }
-
 }
 
 @end

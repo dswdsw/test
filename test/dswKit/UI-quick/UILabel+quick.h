@@ -23,6 +23,6 @@ typedef void  (^lableBlock)(UILabel *label);
 
 -(void)addLeftImg:(NSString *)imgName;
 
--(void)autoHeight;
+
 
 @end

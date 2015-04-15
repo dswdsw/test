@@ -38,6 +38,10 @@
 #import "SingelObject.h"
 #import "DTimer.h"
 
+//control
+#import "LPLabel.h"
+#import "UITextField+input.h"
+#import "DTextField.h"
 
 
 

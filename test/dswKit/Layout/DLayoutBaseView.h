@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIView+quick.h"
+#import "UIView+layout.h"
 #import "UIViewExt.h"
 
 @interface DLayoutBaseView : UIView

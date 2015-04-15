@@ -10,7 +10,7 @@
 
 typedef void(^tapBlcok)();
 
-@interface UIView (quick) <UIGestureRecognizerDelegate>
+@interface UIView (layout) 
  
 + (instancetype)viewNib;
 
@@ -38,10 +38,7 @@ typedef void(^tapBlcok)();
  */
 @property (nonatomic, readonly) UIViewController *viewController;
 
-- (UIView *)findViewByTagName:(NSString *)tagname;
 
-#pragma mark 手势
 
--(void)addTapGesture:(tapBlcok)block;
 
 @end
