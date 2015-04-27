@@ -14,6 +14,7 @@
 		C61232571AA97DF300CD80E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C61232561AA97DF300CD80E8 /* Images.xcassets */; };
 		C612325A1AA97DF300CD80E8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C61232581AA97DF300CD80E8 /* LaunchScreen.xib */; };
 		C61232661AA97DF300CD80E8 /* testTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C61232651AA97DF300CD80E8 /* testTests.m */; };
+		C6509CFA1ADF9528001EBA35 /* testswift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6509CF91ADF9528001EBA35 /* testswift.swift */; };
 		C6F8378F1ADE4F0400C483CF /* CatchCrash.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F837491ADE4F0400C483CF /* CatchCrash.m */; };
 		C6F837901ADE4F0400C483CF /* WLErrorTipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F8374B1ADE4F0400C483CF /* WLErrorTipViewController.m */; };
 		C6F837911ADE4F0400C483CF /* WLErrorTipViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6F8374C1ADE4F0400C483CF /* WLErrorTipViewController.xib */; };
@@ -72,6 +73,8 @@
 		C612325F1AA97DF300CD80E8 /* testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C61232641AA97DF300CD80E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C61232651AA97DF300CD80E8 /* testTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testTests.m; sourceTree = "<group>"; };
+		C6509CF81ADF9527001EBA35 /* test-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "test-Bridging-Header.h"; sourceTree = "<group>"; };
+		C6509CF91ADF9528001EBA35 /* testswift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testswift.swift; sourceTree = "<group>"; };
 		C6F837481ADE4F0400C483CF /* CatchCrash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatchCrash.h; sourceTree = "<group>"; };
 		C6F837491ADE4F0400C483CF /* CatchCrash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatchCrash.m; sourceTree = "<group>"; };
 		C6F8374A1ADE4F0400C483CF /* WLErrorTipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLErrorTipViewController.h; sourceTree = "<group>"; };
@@ -158,9 +161,11 @@
 		C612323D1AA97DF300CD80E8 = {
 			isa = PBXGroup;
 			children = (
+				C6509CF91ADF9528001EBA35 /* testswift.swift */,
 				C61232481AA97DF300CD80E8 /* test */,
 				C61232621AA97DF300CD80E8 /* testTests */,
 				C61232471AA97DF300CD80E8 /* Products */,
+				C6509CF81ADF9527001EBA35 /* test-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -306,8 +311,8 @@
 				C6F8376E1ADE4F0400C483CF /* Dlayout.h */,
 				C6F8376F1ADE4F0400C483CF /* DLayoutBaseView.h */,
 				C6F837701ADE4F0400C483CF /* DLayoutBaseView.m */,
-				C6F837711ADE4F0400C483CF /* gridview */,
 				C6F837741ADE4F0400C483CF /* stackview */,
+				C6F837711ADE4F0400C483CF /* gridview */,
 				C6F837771ADE4F0400C483CF /* UIView+layout.h */,
 				C6F837781ADE4F0400C483CF /* UIView+layout.m */,
 				C6F837791ADE4F0400C483CF /* UIViewExt.h */,
@@ -490,6 +495,7 @@
 				C612324F1AA97DF300CD80E8 /* AppDelegate.m in Sources */,
 				C6F837931ADE4F0400C483CF /* LPLabel.m in Sources */,
 				C612324C1AA97DF300CD80E8 /* main.m in Sources */,
+				C6509CFA1ADF9528001EBA35 /* testswift.swift in Sources */,
 				C6F8379A1ADE4F0400C483CF /* NSData+Encryption.m in Sources */,
 				C6F837951ADE4F0400C483CF /* UINavigationController+quick.m in Sources */,
 				C6F837A51ADE4F0400C483CF /* DWrapView.m in Sources */,
@@ -621,9 +627,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = test/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "test-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -631,9 +640,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = test/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "test-Bridging-Header.h";
 			};
 			name = Release;
 		};

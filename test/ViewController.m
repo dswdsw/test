@@ -8,6 +8,9 @@
 
 #import "ViewController.h"
 
+#import "DSWKit.h"
+#import "test-Swift.h"
+
 @interface ViewController ()
 
 @end
@@ -17,6 +20,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    testswift *test=[testswift new ];
+    [test load];
+    
+  
 }
 
 - (void)didReceiveMemoryWarning {
