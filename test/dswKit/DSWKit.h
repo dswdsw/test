@@ -37,11 +37,13 @@
 #import "NSDictionary+quick.h"
 #import "SingelObject.h"
 #import "DTimer.h"
+#import "NSString+regularExpression.h"
 
 //control
 #import "LPLabel.h"
 #import "UITextField+input.h"
 #import "DTextField.h"
+#import "NSString+regularExpression.h"
 
 
 
