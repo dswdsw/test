@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIScrollView (quick)
+@interface UIScrollView (contentSize)
 
 -(void)autoContentSize;
 

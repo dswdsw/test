@@ -6,11 +6,11 @@
 //  Copyright (c) 2015年 网兰. All rights reserved.
 //
 
-#import "UITextField+quick.h"
+#import "UITextField+init.h"
 #import <objc/runtime.h>
 #import "NSObject+quick.h"
 
-@implementation UITextField (quick)
+@implementation UITextField (init)
 
 //
 + (instancetype)textChange:(eventBlock)block fontSize:(CGFloat)size delegate:(id<UITextFieldDelegate>)delegate placehold:(NSString *)str defaultText:(NSString *)dt fontColor:(UIColor *)color {

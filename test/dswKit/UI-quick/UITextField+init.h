@@ -10,7 +10,7 @@
 #import "UIControl+BlockEvent.h"
 typedef void (^ textFieldBlock)(UITextField *textField);
 
-@interface UITextField (quick) 
+@interface UITextField (init)
 
 + (instancetype)textChange:(eventBlock)block fontSize:(CGFloat)size delegate:(id<UITextFieldDelegate>)delegate placehold:(NSString *)str defaultText:(NSString *)dt fontColor:(UIColor *)color;
 

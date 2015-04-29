@@ -11,7 +11,7 @@
 
 typedef void  (^lableBlock)(UILabel *label);
 
-@interface UILabel (quick)
+@interface UILabel (init)
 
 
 + (instancetype)label:(NSString *)text fontsize:(CGFloat)size fontColor:(UIColor *)color;
@@ -19,9 +19,7 @@ typedef void  (^lableBlock)(UILabel *label);
 +( instancetype)label:(lableBlock)block;
 
 
--(void)addRightImg:(NSString *)imgName;
 
--(void)addLeftImg:(NSString *)imgName;
 
 
 

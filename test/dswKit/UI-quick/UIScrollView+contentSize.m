@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 苏 丛林. All rights reserved.
 //
 
-#import "UIScrollView+quick.h"
+#import "UIScrollView+contentSize.h"
 #import "UIViewExt.h"
 
-@implementation UIScrollView (quick)
+@implementation UIScrollView (contentSize)
 
 -(void)autoContentSize
 {

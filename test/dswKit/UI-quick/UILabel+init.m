@@ -6,11 +6,11 @@
 //  Copyright (c) 2015年 dsw. All rights reserved.
 //
 
-#import "UILabel+quick.h"
+#import "UILabel+init.h"
 #import "UIViewExt.h"
 #import "NSObject+quick.h"
 
-@implementation UILabel (quick)
+@implementation UILabel (init)
 
 + (instancetype)label:(NSString *)text fontsize:(CGFloat)size fontColor:(UIColor *)color {
     UILabel *label = [UILabel  new];
@@ -69,9 +69,6 @@
     }
 }
 
-// -(void)dealloc
-// {
-//    [self removeObserver:self forKeyPath:@"text"];
-// }
+
 
 @end
