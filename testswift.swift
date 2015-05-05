@@ -9,6 +9,7 @@
 import UIKit
 
 class testswift : NSObject {
+    
     func load() {
         var s = "dd"
 

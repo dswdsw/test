@@ -23,4 +23,6 @@
 
 + (NSDictionary *)dictionaryWithJsonData:(NSData *)jsonData ;
 
+-(NSString*)dictionaryToJsonString;
+
 @end

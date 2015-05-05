@@ -4,6 +4,4 @@ import UIKit
 
 var str = "Hello, playground"
 
-var dic :Dictionary = Dictionary()
-
-dic["one"] = 1
+ 

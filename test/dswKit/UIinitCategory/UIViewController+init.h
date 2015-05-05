@@ -10,10 +10,10 @@
 
 typedef void (^firstLuanchBlock)();
 
-@interface UIViewController (qiuck)
+@interface UIViewController (init)
 
--(void)firstLuanch :(firstLuanchBlock) block key:(NSString *)keys;
++(instancetype)controllerFromXib;
 
--(void)firstLuanch :(firstLuanchBlock) block ;
++(instancetype)storyboard:(NSString *)name id:(NSString *)key;
 
 @end

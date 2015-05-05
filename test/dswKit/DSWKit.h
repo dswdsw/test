@@ -18,18 +18,19 @@
 #import "UIControl+BlockEvent.h"
 #import "UIView+quick.h"
 #import "UIButton+quick.h"
-#import "UILabel+init.h"
 #import "UIViewExt.h"
-#import "UITextField+init.h"
-#import "LPLabel.h"
 #import "UIAlertView+quick.h"
 #import "UIScrollView+contentSize.h"
 
-//controller
+// uiinitCategory
+#import "UIViewController+init.h"
+#import "UILabel+init.h"
+#import "UITextField+init.h"
+
+// controller
 #import "UIViewController+qiuck.h"
 
-
-//foundation
+// foundation
 #import "DBinding.h"
 #import "NSString+quick.h"
 #import "NSObject+quick.h"
@@ -39,11 +40,6 @@
 #import "DTimer.h"
 #import "NSString+regularExpression.h"
 
-//control
+// control
 #import "LPLabel.h"
 #import "UITextField+input.h"
-
-
-
-
-

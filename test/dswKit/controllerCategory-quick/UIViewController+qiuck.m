@@ -11,16 +11,6 @@
 
 @implementation UIViewController (qiuck)
 
-+ (instancetype)controllerFromXib {
-    return [[self alloc]initWithNibName:NSStringFromClass([self class]) bundle:nil];
-}
-
-+ (instancetype)storyboard:(NSString *)name id:(NSString *)key {
-    UIStoryboard *stroryboard = [UIStoryboard storyboardWithName:name bundle:nil];
-
-    return [stroryboard instantiateViewControllerWithIdentifier:key];
-}
-
 - (void)firstLuanch:(firstLuanchBlock)block key:(NSString *)keys;
 {
     

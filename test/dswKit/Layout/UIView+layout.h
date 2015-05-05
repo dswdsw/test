@@ -39,6 +39,6 @@ typedef void(^tapBlcok)();
 @property (nonatomic, readonly) UIViewController *viewController;
 
 
-
+-(void)floatLeftForView:(UIView *)view;
 
 @end

@@ -9,7 +9,7 @@
 #import "CatchCrash.h"
 #import <UIKit/UIKit.h>
 #import "WLErrorTipViewController.h"
-#import "UIViewController+qiuck.h"
+#import "UIViewController+init.h"
 
 @implementation CatchCrash
 
