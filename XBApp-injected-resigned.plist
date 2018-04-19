@@ -39,7 +39,7 @@
                     <key>kind</key>
                     <string>software</string>
                     <key>title</key>
-                    <string>学贝</string>
+                    <string>学贝 注意：安装后点击 设置-通用-设备管理- 企业级应用（vensa，too）信任</string>
                 </dict>
             </dict>
         </array>
