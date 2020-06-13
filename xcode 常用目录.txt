@@ -6,7 +6,7 @@ default  templates  /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneO
 user templates    /Users/lixinxin/Library/Developer/Xcode/Templates
 sedffsd
 
-电脑操作
+电脑操作sdfsdf
 
 sdffsdf
 
