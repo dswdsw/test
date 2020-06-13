@@ -3,3 +3,4 @@ plug-ins  /Users/lixinxin/Library/Application Support/Developer/Shared/Xcode/plu
 default  templates  /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode
 
 user templates    /Users/lixinxin/Library/Developer/Xcode/Templates
+sedffsd
