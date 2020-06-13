@@ -7,3 +7,5 @@ user templates    /Users/lixinxin/Library/Developer/Xcode/Templates
 sedffsd
 
 电脑操作
+
+123
